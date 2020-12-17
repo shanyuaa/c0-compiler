@@ -28,7 +28,7 @@ public class out {
             }
             else{ //函数名、字符串
                 file.write(1);
-                file.write(globalV.get(i).length());
+                file.write(intToByte(globalV.get(i).length()));
                 file.write(globalV.get(i).getBytes());
             }
         }
