@@ -112,7 +112,12 @@ public class Tokenizer {
 
         it.nextChar();
         while(true){
+            if(it.isEOF()){
+                throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
+            }
             char peek = it.peekChar();
+
+
 
             if(peek == '"'){
                 it.nextChar();
@@ -274,7 +279,11 @@ public class Tokenizer {
             case '/':
                 // 填入返回语句
                 if(it.peekChar() == '/'){
-                    while (it.nextChar() != '\n');
+                    while (it.nextChar() != '\n'){
+                        if(it.isEOF()){
+                            throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
+                        }
+                    }
                     return nextToken();
                 }
                 return new Token(TokenType.DIV, '/', it.previousPos(), it.currentPos());
