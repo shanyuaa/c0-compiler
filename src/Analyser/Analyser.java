@@ -666,22 +666,30 @@ public class Analyser {
                     CurrentFnInstruction.add(new Instruction(Operation.callname, currentGlobal));
                 }
             } else { //只有IDENT
-                if (index == null) {
+                if(index==null&&nameToken.getValue().toString().equals("int")){
+                    type=TokenType.INT;
+                }
+                else if(index==null&&nameToken.getValue().toString().equals("double")){
+                    type=TokenType.DOUBLE;
+                }
+                else if (index == null) {
                     throw new AnalyzeError(ErrorCode.NotDeclared, nameToken.getStartPos());
                 }
-                Symbol symbol = symbolTable.get(index);
+                else{
+                    Symbol symbol = symbolTable.get(index);
 
-                if(symbol.getSymbolType() == SymbolType.global){ //取地址
-                    CurrentFnInstruction.add(new Instruction(Operation.globa, symbol.getOffset()));
-                }else if(symbol.getSymbolType() == SymbolType.local){
-                    CurrentFnInstruction.add(new Instruction(Operation.loca, symbol.getOffset()));
-                }else{
-                    CurrentFnInstruction.add(new Instruction(Operation.arga, symbol.getOffset()));
+                    if(symbol.getSymbolType() == SymbolType.global){ //取地址
+                        CurrentFnInstruction.add(new Instruction(Operation.globa, symbol.getOffset()));
+                    }else if(symbol.getSymbolType() == SymbolType.local){
+                        CurrentFnInstruction.add(new Instruction(Operation.loca, symbol.getOffset()));
+                    }else{
+                        CurrentFnInstruction.add(new Instruction(Operation.arga, symbol.getOffset()));
+                    }
+
+                    CurrentFnInstruction.add(new Instruction(Operation.load64)); //取值
+
+                    type = symbolTable.get(index).getType();
                 }
-
-                CurrentFnInstruction.add(new Instruction(Operation.load64)); //取值
-
-                type = symbolTable.get(index).getType();
             }
         }
 
