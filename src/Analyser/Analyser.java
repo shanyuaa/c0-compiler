@@ -22,7 +22,7 @@ public class Analyser {
     int globalOffset = 0;
     int argsOffset = 0;
     int localOffset = 0;
-    int fnOffset = 0;
+    int fnOffset = 1;
     ArrayList<String> GlobalVariable=new ArrayList<>();
     ArrayList<FnInstruction> fnLists = new ArrayList<>();
     ArrayList<Instruction> CurrentFnInstruction;
@@ -661,7 +661,7 @@ public class Analyser {
                     type = return_type;
                 }
                 if(index != null){
-                    CurrentFnInstruction.add(new Instruction(Operation.call, symbolTable.get(index).getOffset()));
+                    CurrentFnInstruction.add(new Instruction(Operation.call, symbolTable.get(index).getFnoffset()));
                 }else{
                     CurrentFnInstruction.add(new Instruction(Operation.callname, currentGlobal));
                 }
