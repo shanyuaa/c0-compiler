@@ -774,23 +774,24 @@ public class Analyser {
      */
     private void OPGAnalyse(Stack<TokenType> s, Stack Ns) throws TokenizeError {
         System.out.println("OPG开始分析");
-        int sch = Symbol.indexOf(s.peek());
-        int ch = Symbol.indexOf(peek().getTokenType());
+        while (true) { //栈内大于当前 规约
+            int sch = Symbol.indexOf(s.peek());
+            int ch = Symbol.indexOf(peek().getTokenType());
 
 
-        if (sch == -1 && ch == -1) { //都为#
-            System.out.println("没有符号可以规约啦 都是# 结束！");
-            return;
-        } else if (sch == -1 || SymbolMatrix[sch][ch] == 0) { //栈内优先级小于当前字符 入栈
-            System.out.println("栈内的符号：" + s.peek() + " 栈外的符号：" + peek().getTokenType() + " 栈内优先级小于栈外，入栈！");
-            s.push(Symbol.get(ch));
+            if (sch == -1 && ch == -1) { //都为#
+                System.out.println("没有符号可以规约啦 都是# 结束！");
+                return;
+            } else if (sch == -1 || SymbolMatrix[sch][ch] == 0) { //栈内优先级小于当前字符 入栈
+                System.out.println("栈内的符号：" + s.peek() + " 栈外的符号：" + peek().getTokenType() + " 栈内优先级小于栈外，入栈！");
+                s.push(Symbol.get(ch));
 
-            next();
-            System.out.println("此时栈中符号：" + s);
-        } else {
-            while ((ch == -1 || SymbolMatrix[sch][ch] == 1) && s.size() > 1) { //栈内大于当前 规约
-                System.out.println("站内符号：" + s.peek() + " 栈外符号：" + peek().getTokenType() + " 要规约了");
-                reduction(s, Ns);
+                next();
+                System.out.println("此时栈中符号：" + s);
+                return;
+            } else if((ch == -1 || SymbolMatrix[sch][ch] == 1) && s.size() > 1){
+                    System.out.println("站内符号：" + s.peek() + " 栈外符号：" + peek().getTokenType() + " 要规约了");
+                    reduction(s, Ns);
             }
         }
     }
