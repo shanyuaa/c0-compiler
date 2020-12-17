@@ -1243,7 +1243,7 @@ public class Analyser {
             throw new AnalyzeError(ErrorCode.DuplicateDeclaration, new Pos(1,0));
         }
         analyseBlockStmt(false, tyTokenType, true, breakEndPos, InitPos);
-        CurrentFnInstruction.add(new Instruction(Operation.br, InitPos-CurrentFnInstruction.size()+1));
+        CurrentFnInstruction.add(new Instruction(Operation.br, InitPos-CurrentFnInstruction.size()));
         CurrentFnInstruction.get(currentPos).setValue(CurrentFnInstruction.size()-1 - currentPos);
         for(int i = 0; i < breakEndPos.size(); i ++){
             CurrentFnInstruction.get(breakEndPos.get(i)).setValue(CurrentFnInstruction.size()-1-breakEndPos.get(i)); //存每一个break
