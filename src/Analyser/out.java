@@ -17,11 +17,11 @@ public class out {
         file.write(intToByte(globalV.size()));
 
         for(int i = 0; i < globalV.size(); i ++){ //全局
-            if(globalV.get(i)=="1"){
+            if(globalV.get(i).equals("1")){
                 file.write(0);
                 file.write(intToByte(8));
                 file.write(longToByte(0L));
-            }else if(globalV.get(i) == "0"){
+            }else if(globalV.get(i).equals("0")){
                 file.write(1);
                 file.write(intToByte(8));
                 file.write(longToByte(0L));
