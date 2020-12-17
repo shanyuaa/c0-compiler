@@ -499,6 +499,8 @@ public class Analyser {
 
         if(tyToken.getTokenType()!=TokenType.VOID && !hasReturn){ //如果是fn 需要有return
             throw new AnalyzeError(ErrorCode.DuplicateDeclaration, new Pos(0,0));
+        }else if(tyToken.getTokenType()==TokenType.VOID && !hasReturn){
+            CurrentFnInstruction.add(new Instruction(Operation.ret));
         }
 
         fnInstruction.setBodyCount(fnInstruction.getBodyItem().size());

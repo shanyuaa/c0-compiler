@@ -38,7 +38,7 @@ public class Tokenizer {
         }
         else if (Character.isAlphabetic(peek)) {
             return lexIdentOrKeyword();
-        } else if(peek == '_'){
+        } else if(peek == '_') {
             return lexIdentOrKeyword();
         }
         else {
@@ -273,6 +273,10 @@ public class Tokenizer {
 
             case '/':
                 // 填入返回语句
+                if(it.peekChar() == '/'){
+                    while (it.nextChar() != '\n');
+                    return nextToken();
+                }
                 return new Token(TokenType.DIV, '/', it.previousPos(), it.currentPos());
             // 填入更多状态和返回语句
             case '=':
