@@ -45,13 +45,13 @@ public class out {
             ArrayList<Instruction> fninstructions = fnList.get(i).getBodyItem();
 
             for(int j = 0; j < fninstructions.size(); j ++){
-                file.write(fninstructions.get(i).getOpt().getI());
-                if(fninstructions.get(i).getValue() != null){ //有操作数
-                    if(fninstructions.get(i).getOpt() == Operation.push){ //是push
-                        file.write(longToByte((long)fninstructions.get(i).getValue()));
+                file.write(fninstructions.get(j).getOpt().getI());
+                if(fninstructions.get(j).getValue() != null){ //有操作数
+                    if(fninstructions.get(j).getOpt() == Operation.push){ //是push
+                        file.write(longToByte((long)fninstructions.get(j).getValue()));
                     }
                     else{
-                        file.write(intToByte((int)fninstructions.get(i).getValue()));
+                        file.write(intToByte((int)fninstructions.get(j).getValue()));
                     }
                 }
             }

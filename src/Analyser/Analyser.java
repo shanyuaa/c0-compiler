@@ -706,7 +706,7 @@ public class Analyser {
                 globalOffset++;
                 type = TokenType.INT;
 
-                CurrentFnInstruction.add(new Instruction(Operation.push, globalOffset-1));
+                CurrentFnInstruction.add(new Instruction(Operation.push, (long)globalOffset-1));
 
                 System.out.println("这里有个STRING：" + peek());
                 next();

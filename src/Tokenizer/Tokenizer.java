@@ -93,7 +93,7 @@ public class Tokenizer {
         }
 
         if(token.length() != 0){
-            int num = Integer.valueOf(token.toString());
+            long num = Long.valueOf(token.toString());
             Token t = new Token(TokenType.UINT_LITERAL, num, start, it.currentPos());
             return t;
         }
