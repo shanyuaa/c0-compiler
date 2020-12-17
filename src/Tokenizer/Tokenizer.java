@@ -138,12 +138,13 @@ public class Tokenizer {
     private Token lexCHAR() throws TokenizeError {
         token.setLength(0);
         Pos start = it.currentPos();
+        Token t = null;
 
         it.nextChar();
         char peek = it.peekChar();
 
         if(peek != '\'' && peek != '\\'){
-            Token t = new Token(TokenType.CHAR_LITERAL, it.nextChar(), start, it.currentPos());
+            t = new Token(TokenType.CHAR_LITERAL, it.nextChar(), start, it.currentPos());
         }
         else if(peek == '\\'){
             it.nextChar();
@@ -169,11 +170,18 @@ public class Tokenizer {
                     throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
                 }
                 it.nextChar();
-                Token t = new Token(TokenType.CHAR_LITERAL, cur, start, it.currentPos());
-                return t;
+                t = new Token(TokenType.CHAR_LITERAL, cur, start, it.currentPos());
+                
             }
         }
-        return null;
+        else{
+            throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
+        }
+        if(it.peekChar() != '\''){
+            throw new TokenizeError(ErrorCode.InvalidInput, it.previousPos());
+        }
+        it.nextChar();
+        return t;
     }
 
     private void lexEscape(char now) throws TokenizeError {

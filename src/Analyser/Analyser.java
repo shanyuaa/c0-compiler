@@ -661,7 +661,7 @@ public class Analyser {
                     type = return_type;
                 }
                 if(index != null){
-                    CurrentFnInstruction.add(new Instruction(Operation.call, symbolTable.get(index).getFnoffset()));
+                    CurrentFnInstruction.add(new Instruction(Operation.call, symbolTable.get(index).getOffset()));
                 }else{
                     CurrentFnInstruction.add(new Instruction(Operation.callname, currentGlobal));
                 }
