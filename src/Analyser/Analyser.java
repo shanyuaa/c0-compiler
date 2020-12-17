@@ -3,17 +3,14 @@ package Analyser;
 import Tokenizer.Token;
 import Tokenizer.TokenType;
 import Tokenizer.Tokenizer;
-import com.sun.org.apache.xml.internal.dtm.ref.sax2dtm.SAX2DTM2;
-import com.sun.org.apache.xml.internal.security.Init;
-import com.sun.xml.internal.rngom.nc.NsNameClass;
+
 import error.*;
 import instruction.FnInstruction;
 import instruction.Instruction;
 import instruction.Operation;
 import util.Pos;
 
-import javax.swing.*;
-import java.lang.reflect.Array;
+
 import java.util.*;
 
 

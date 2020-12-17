@@ -1,9 +1,8 @@
 package Tokenizer;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+
 import error.ErrorCode;
 import error.TokenizeError;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import util.Pos;
 
 import java.util.regex.Matcher;

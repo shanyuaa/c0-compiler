@@ -1,7 +1,6 @@
 package Analyser;
 
 import Tokenizer.TokenType;
-import Analyser.SymbolType;
 
 import java.util.ArrayList;
 

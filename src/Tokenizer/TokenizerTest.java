@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import static org.junit.Assert.*;
+
 
 public class TokenizerTest {
     private Tokenizer init(){
