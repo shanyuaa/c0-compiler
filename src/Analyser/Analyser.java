@@ -457,7 +457,6 @@ public class Analyser {
         if(tyToken.getValue().equals("int")){
             tyToken.setTokenType(TokenType.INT);
             fnInstruction.setRet_slots(1); //return数量置1
-            argsOffset++;
             for(int i = symbolTable.size()-1; symbolTable.get(i).getSymbolType() == SymbolType.args; i--){
                 symbolTable.get(i).setOffset(symbolTable.get(i).getOffset()+1);
             }
@@ -468,7 +467,6 @@ public class Analyser {
         else if(tyToken.getValue().equals("double")){
             tyToken.setTokenType(TokenType.DOUBLE);
             fnInstruction.setRet_slots(1);
-            argsOffset++;
             for(int i = symbolTable.size()-1; symbolTable.get(i).getSymbolType() == SymbolType.args; i--){
                 symbolTable.get(i).setOffset(symbolTable.get(i).getOffset()+1);
             }
@@ -1273,6 +1271,7 @@ public class Analyser {
         hasReturn = analyseBlockStmt(false, tyTokenType, isWhile, breakEndPos, continuePos); //if 第一个block块
         CurrentFnInstruction.add(new Instruction(Operation.br)); //if块结束跳转
         int endPos = CurrentFnInstruction.size()-1;
+        CurrentFnInstruction.get(currentPos).setValue(CurrentFnInstruction.size()-1 - currentPos);
 
 
 
@@ -1280,21 +1279,25 @@ public class Analyser {
         while (nextIf(TokenType.ELSE_KW) != null) { //如果有else
             System.out.println("有else哦");
             if (nextIf(TokenType.IF_KW) != null) { // 是else if的情况
-                CurrentFnInstruction.get(currentPos).setValue(CurrentFnInstruction.size()-1 - currentPos);
                 ifexpr = analyseExpr(true);
+                CurrentFnInstruction.add(new Instruction(Operation.brtrue, 1));
+                CurrentFnInstruction.add(new Instruction(Operation.br));
+                int currentPos1 = CurrentFnInstruction.size()-1; //br指令的当前位置
+
+
+
                 if(ifexpr == TokenType.VOID){
                     throw new AnalyzeError(ErrorCode.DuplicateDeclaration, new Pos(1,0));
                 }
                 hasReturn &= analyseBlockStmt(false, tyTokenType, isWhile, breakEndPos, continuePos);
                 CurrentFnInstruction.add(new Instruction(Operation.br));
                 Pos.add(CurrentFnInstruction.size()-1);
+                CurrentFnInstruction.get(currentPos1).setValue(CurrentFnInstruction.size()-1 - currentPos1);
             } else if (check(TokenType.L_BRACE)) { //只有else的情况
-                CurrentFnInstruction.get(currentPos).setValue(CurrentFnInstruction.size()-1 - currentPos);
                 hasReturn &= analyseBlockStmt(false, tyTokenType, isWhile, breakEndPos, continuePos);
                 hasElse = true;
                 break;
             }
-            CurrentFnInstruction.get(currentPos).setValue(CurrentFnInstruction.size()-1 - currentPos);
         }
         CurrentFnInstruction.get(endPos).setValue(CurrentFnInstruction.size()-1-endPos);
         for(int i = 0; i < Pos.size(); i ++){
